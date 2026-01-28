@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import ai_engine  # Aapnu Brain
+import ai_engine  
 from datetime import datetime
 import time 
 from fpdf import FPDF 
@@ -17,127 +17,126 @@ st.set_page_config(
 # ---------------- 🌐 TRANSLATION DICTIONARY ----------------
 translations = {
     "English": {
-        "nav_overview": "📊 Executive Overview",
-        "nav_maint": "🛠 Predictive Maintenance",
-        "nav_inv": "📦 Smart Inventory",
-        "nav_energy": "⚡ Energy Optimizer",
-        "nav_quality": "🔍 Quality Control",
-        "title": "🏭 Factory Command Center",
+        "nav_overview": "Executive Overview",
+        "nav_maint": "Predictive Maintenance",
+        "nav_inv": "Smart Inventory",
+        "nav_energy": "Energy Optimizer",
+        "nav_quality": "Quality Control",
+        "title": "Factory Command Center",
         "subtitle": "Real-time Operational Intelligence & Financial Risk Analysis",
-        "upload_header": "📂 UPLOAD DATASETS (Maintenance, Inventory, Energy)",
-        "hero_eff": "🏭 Overall Efficiency",
-        "hero_risk": "💰 Estimated Risk Cost",
-        "hero_alerts": "🚨 Active Alerts",
-        "hero_production": "📦 Production Target",
+        "upload_header": "UPLOAD DATASETS (Maintenance, Inventory, Energy)",
+        "hero_eff": "Overall Efficiency",
+        "hero_risk": "Estimated Risk Cost",
+        "hero_alerts": "Active Alerts",
+        "hero_production": "Production Target",
         "chat_placeholder": "Ask about factory...",
-        "btn_download": "📥 Download Report",
-        "btn_refresh": "🔄 Refresh",
-        "stat_vib": "⚙️ Avg Vibration",
-        "stat_top_prod": "🔥 Top Product",
-        "stat_peak": "⚡ Peak Load",
-        "stat_roi": "🌱 Carbon ROI Potential",
-        "ai_center": "🤖 AI Decision Center (Prioritized Actions)",
-        "chat_title": "💬 AI Assistant",
+        "btn_download": "Download Report",
+        "btn_refresh": "Refresh",
+        "stat_vib": "Avg Vibration",
+        "stat_top_prod": "Top Product",
+        "stat_peak": "Peak Load",
+        "stat_roi": "Carbon ROI Potential",
+        "ai_center": "AI Decision Center (Prioritized Actions)",
+        "chat_title": "AI Assistant",
         
         # Insights Messages
-        "insight_wait": "ℹ️ Upload data files above to generate AI Decisions.",
-        "insight_maint_risk": "🔴 **URGENT:** Maintenance needed for **{count} machines**. Estimated risk: {cost}",
-        "insight_maint_ok": "🟢 **Maintenance:** All machines healthy.",
-        "insight_prod": "📦 **Production:** Prioritize **'{prod}'** batch.",
-        "insight_energy_waste": "⚡ **Profit Opportunity:** Fix {hours} hours of waste. Earn {rev} in Carbon Credits.",
-        "insight_energy_ok": "✅ **Energy:** Consumption is optimized.",
+        "insight_wait": "Upload data files above to generate AI Decisions.",
+        "insight_maint_risk": "**URGENT:** Maintenance needed for **{count} machines**. Estimated risk: {cost}",
+        "insight_maint_ok": "**Maintenance:** All machines healthy.",
+        "insight_prod": "**Production:** Prioritize **'{prod}'** batch.",
+        "insight_energy_waste": "**Profit Opportunity:** Fix {hours} hours of waste. Earn {rev} in Carbon Credits.",
+        "insight_energy_ok": "**Energy:** Consumption is optimized.",
 
         # Chatbot Messages
-        "bot_nodata": "⚠️ Please upload data in 'Executive Overview' first.",
-        "bot_risk_high": "⚠️ ALERT: {count} Machines are Critical! Check immediately.",
-        "bot_risk_ok": "✅ All Machines are healthy. No issues.",
-        "bot_prod": "📦 Forecast: {total} Units. Top Product: {top}.",
-        "bot_energy_waste": "⚡ WARNING: {count} Hours of high waste detected.",
-        "bot_energy_ok": "🌱 Energy consumption is efficient.",
+        "bot_nodata": "Please upload data in 'Executive Overview' first.",
+        "bot_risk_high": "ALERT: {count} Machines are Critical! Check immediately.",
+        "bot_risk_ok": "All Machines are healthy. No issues.",
+        "bot_prod": "Forecast: {total} Units. Top Product: {top}.",
+        "bot_energy_waste": "WARNING: {count} Hours of high waste detected.",
+        "bot_energy_ok": "Energy consumption is efficient.",
         "bot_confused": "Sorry, I didn't understand. Try 'Status', 'Risk' or 'Profit'."
     },
     "Gujarati": {
-        "nav_overview": "📊 મુખ્ય ડેશબોર્ડ",
-        "nav_maint": "🛠 મશીન મેન્ટેનન્સ",
-        "nav_inv": "📦 સ્માર્ટ ઇન્વેન્ટરી",
-        "nav_energy": "⚡ એનર્જી સેવર",
-        "nav_quality": "🔍 ક્વોલિટી ચેક",
-        "title": "🏭 ફેક્ટરી કમાન્ડ સેન્ટર",
+        "nav_overview": "મુખ્ય ડેશબોર્ડ",
+        "nav_maint": "મશીન મેન્ટેનન્સ",
+        "nav_inv": "સ્માર્ટ ઇન્વેન્ટરી",
+        "nav_energy": "એનર્જી સેવર",
+        "nav_quality": "ક્વોલિટી ચેક",
+        "title": "ફેક્ટરી કમાન્ડ સેન્ટર",
         "subtitle": "રીયલ-ટાઇમ ફેક્ટરી એનાલિટિક્સ અને જોખમ વિશ્લેષણ",
-        "upload_header": "📂 ડેટા અપલોડ કરો (મશીન, સ્ટોક, વીજળી)",
-        "hero_eff": "🏭 કુલ કાર્યક્ષમતા",
-        "hero_risk": "💰 અંદાજિત નુકસાન",
-        "hero_alerts": "🚨 એક્ટિવ એલર્ટ",
-        "hero_production": "📦 ઉત્પાદન લક્ષ્ય (ટાર્ગેટ)",
+        "upload_header": "ડેટા અપલોડ કરો (મશીન, સ્ટોક, વીજળી)",
+        "hero_eff": "કુલ કાર્યક્ષમતા",
+        "hero_risk": "અંદાજિત નુકસાન",
+        "hero_alerts": "એક્ટિવ એલર્ટ",
+        "hero_production": "ઉત્પાદન લક્ષ્ય (ટાર્ગેટ)",
         "chat_placeholder": "ફેક્ટરી વિશે પૂછો...",
-        "btn_download": "📥 રિપોર્ટ ડાઉનલોડ કરો",
-        "btn_refresh": "🔄 રીફ્રેશ કરો",
-        "stat_vib": "⚙️ સરેરાશ વાઇબ્રેશન",
-        "stat_top_prod": "🔥 મુખ્ય પ્રોડક્ટ",
-        "stat_peak": "⚡ મહત્તમ લોડ",
-        "stat_roi": "🌱 કાર્બન ક્રેડિટ કમાણી",
-        "ai_center": "🤖 AI નિર્ણય કેન્દ્ર (મહત્વપૂર્ણ)",
-        "chat_title": "💬 ફેક્ટરી આસિસ્ટન્ટ",
+        "btn_download": "રિપોર્ટ ડાઉનલોડ કરો",
+        "btn_refresh": "રીફ્રેશ કરો",
+        "stat_vib": "સરેરાશ વાઇબ્રેશન",
+        "stat_top_prod": "મુખ્ય પ્રોડક્ટ",
+        "stat_peak": "મહત્તમ લોડ",
+        "stat_roi": "કાર્બન ક્રેડિટ કમાણી",
+        "ai_center": "AI નિર્ણય કેન્દ્ર (મહત્વપૂર્ણ)",
+        "chat_title": "ફેક્ટરી આસિસ્ટન્ટ",
 
         # Insights Messages
-        "insight_wait": "ℹ️ AI નિર્ણયો જોવા માટે ઉપર ડેટા અપલોડ કરો.",
-        "insight_maint_risk": "🔴 **તાત્કાલિક:** **{count} મશીનો** રિપેરિંગ માંગે છે. અંદાજિત જોખમ: {cost}",
-        "insight_maint_ok": "🟢 **મેન્ટેનન્સ:** બધા મશીન એકદમ બરાબર છે.",
-        "insight_prod": "📦 **ઉત્પાદન:** **'{prod}'** બેચને પ્રાથમિકતા આપો.",
-        "insight_energy_waste": "⚡ **નફાની તક:** {hours} કલાકનો બગાડ અટકાવો. કાર્બન ક્રેડિટ્સમાં {rev} કમાઓ.",
-        "insight_energy_ok": "✅ **એનર્જી:** વીજળીનો વપરાશ યોગ્ય છે.",
+        "insight_wait": "AI નિર્ણયો જોવા માટે ઉપર ડેટા અપલોડ કરો.",
+        "insight_maint_risk": "**તાત્કાલિક:** **{count} મશીનો** રિપેરિંગ માંગે છે. અંદાજિત જોખમ: {cost}",
+        "insight_maint_ok": "**મેન્ટેનન્સ:** બધા મશીન એકદમ બરાબર છે.",
+        "insight_prod": "**ઉત્પાદન:** **'{prod}'** બેચને પ્રાથમિકતા આપો.",
+        "insight_energy_waste": "**નફાની તક:** {hours} કલાકનો બગાડ અટકાવો. કાર્બન ક્રેડિટ્સમાં {rev} કમાઓ.",
+        "insight_energy_ok": "**એનર્જી:** વીજળીનો વપરાશ યોગ્ય છે.",
 
         # Chatbot Messages
-        "bot_nodata": "⚠️ કૃપા કરીને પહેલા ડેટા અપલોડ કરો.",
-        "bot_risk_high": "⚠️ ચેતવણી: {count} મશીન ક્રિટિકલ કન્ડિશનમાં છે! તાત્કાલિક તપાસો.",
-        "bot_risk_ok": "✅ બધા મશીન એકદમ બરાબર છે. કોઈ ચિંતા નથી.",
-        "bot_prod": "📦 અનુમાન: {total} યુનિટ્સ. મુખ્ય પ્રોડક્ટ: {top}.",
-        "bot_energy_waste": "⚡ ચેતવણી: {count} કલાક પાવર વેસ્ટ (બગાડ) પકડાયો છે.",
-        "bot_energy_ok": "🌱 વીજળીનો વપરાશ એકદમ કાર્યક્ષમ છે.",
+        "bot_nodata": "કૃપા કરીને પહેલા ડેટા અપલોડ કરો.",
+        "bot_risk_high": "ચેતવણી: {count} મશીન ક્રિટિકલ કન્ડિશનમાં છે! તાત્કાલિક તપાસો.",
+        "bot_risk_ok": "બધા મશીન એકદમ બરાબર છે. કોઈ ચિંતા નથી.",
+        "bot_prod": "અનુમાન: {total} યુનિટ્સ. મુખ્ય પ્રોડક્ટ: {top}.",
+        "bot_energy_waste": "ચેતવણી: {count} કલાક પાવર વેસ્ટ (બગાડ) પકડાયો છે.",
+        "bot_energy_ok": "વીજળીનો વપરાશ એકદમ કાર્યક્ષમ છે.",
         "bot_confused": "માફ કરજો, હું સમજ્યો નહીં. 'જોખમ', 'ઉત્પાદન' કે 'નફો' વિશે પૂછો."
     },
     "Hindi": {
-        "nav_overview": "📊 मुख्य डैशबोर्ड",
-        "nav_maint": "🛠 प्रिडिक्टिव मेंटेनेंस",
-        "nav_inv": "📦 स्मार्ट इन्वेंट्री",
-        "nav_energy": "⚡ ऊर्जा अनुकूलक",
-        "nav_quality": "🔍 गुणवत्ता नियंत्रण",
-        "title": "🏭 फैक्ट्री कमांड सेंटर",
+        "nav_overview": "मुख्य डैशबोर्ड",
+        "nav_maint": "प्रिडिक्टिव मेंटेनेंस",
+        "nav_inv": "स्मार्ट इन्वेंट्री",
+        "nav_energy": "ऊर्जा अनुकूलक",
+        "nav_quality": "गुणवत्ता नियंत्रण",
+        "title": "फैक्ट्री कमांड सेंटर",
         "subtitle": "रियल-टाइम ऑपरेशनल इंटेलिजेंस और जोखिम विश्लेषण",
-        "upload_header": "📂 डेटा अपलोड करें (रखरखाव, इन्वेंट्री, ऊर्जा)",
-        "hero_eff": "🏭 कुल दक्षता",
-        "hero_risk": "💰 अनुमानित जोखिम लागत",
-        "hero_alerts": "🚨 सक्रिय अलर्ट",
-        "hero_production": "📦 उत्पादन लक्ष्य",
+        "upload_header": "डेटा अपलोड करें (रखरखाव, इन्वेंट्री, ऊर्जा)",
+        "hero_eff": "कुल दक्षता",
+        "hero_risk": "अनुमानित जोखिम लागत",
+        "hero_alerts": "सक्रिय अलर्ट",
+        "hero_production": "उत्पादन लक्ष्य",
         "chat_placeholder": "फैक्ट्री के बारे में पूछें...",
-        "btn_download": "📥 रिपोर्ट डाउनलोड करें",
-        "btn_refresh": "🔄 रिफ्रेश",
-        "stat_vib": "⚙️ औसत कंपन",
-        "stat_top_prod": "🔥 शीर्ष उत्पाद",
-        "stat_peak": "⚡ पीक लोड",
-        "stat_roi": "🌱 कार्बन क्रेडिट आय",
-        "ai_center": "🤖 AI निर्णय केंद्र (प्राथमिकता)",
-        "chat_title": "💬 एआई सहायक",
+        "btn_download": "रिपोर्ट डाउनलोड करें",
+        "btn_refresh": "रिफ्रेश",
+        "stat_vib": "औसत कंपन",
+        "stat_top_prod": "शीर्ष उत्पाद",
+        "stat_peak": "पीक लोड",
+        "stat_roi": "कार्बन क्रेडिट आय",
+        "ai_center": "AI निर्णय केंद्र (प्राथमिकता)",
+        "chat_title": "एआई सहायक",
 
         # Insights Messages
-        "insight_wait": "ℹ️ AI निर्णय देखने के लिए डेटा अपलोड करें.",
-        "insight_maint_risk": "🔴 **तत्काल:** **{count} मशीनों** को मरम्मत की आवश्यकता है. जोखिम: {cost}",
-        "insight_maint_ok": "🟢 **रखरखाव:** सभी मशीनें ठीक हैं.",
-        "insight_prod": "📦 **उत्पादन:** **'{prod}'** बैच को प्राथमिकता दें.",
-        "insight_energy_waste": "⚡ **लाभ का अवसर:** {hours} घंटे की बर्बादी रोकें. कार्बन क्रेडिट में {rev} कमाएं.",
-        "insight_energy_ok": "✅ **ऊर्जा:** खपत अनुकूलित है.",
+        "insight_wait": "AI निर्णय देखने के लिए डेटा अपलोड करें.",
+        "insight_maint_risk": "**तत्काल:** **{count} मशीनों** को मरम्मत की आवश्यकता है. जोखिम: {cost}",
+        "insight_maint_ok": "**रखरखाव:** सभी मशीनें ठीक हैं.",
+        "insight_prod": "**उत्पादन:** **'{prod}'** बैच को प्राथमिकता दें.",
+        "insight_energy_waste": "**लाभ का अवसर:** {hours} घंटे की बर्बादी रोकें. कार्बन क्रेडिट में {rev} कमाएं.",
+        "insight_energy_ok": "**ऊर्जा:** खपत अनुकूलित है.",
 
         # Chatbot Messages
-        "bot_nodata": "⚠️ कृपया पहले डेटा अपलोड करें.",
-        "bot_risk_high": "⚠️ चेतावनी: {count} मशीनें खराब स्थिति में हैं! तुरंत जांचें.",
-        "bot_risk_ok": "✅ सभी मशीनें ठीक काम कर रही हैं.",
-        "bot_prod": "📦 अनुमान: {total} यूनिट्स. मुख्य उत्पाद: {top}.",
-        "bot_energy_waste": "⚡ चेतावनी: {count} घंटे बिजली की बर्बादी पाई गई है.",
-        "bot_energy_ok": "🌱 ऊर्जा की खपत सही है.",
+        "bot_nodata": "कृपया पहले डेटा अपलोड करें.",
+        "bot_risk_high": "चेतावनी: {count} मशीनें खराब स्थिति में हैं! तुरंत जांचें.",
+        "bot_risk_ok": "सभी मशीनें ठीक काम कर रही हैं.",
+        "bot_prod": "अनुमान: {total} यूनिट्स. मुख्य उत्पाद: {top}.",
+        "bot_energy_waste": "चेतावनी: {count} घंटे बिजली की बर्बादी पाई गई है.",
+        "bot_energy_ok": "ऊर्जा की खपत सही है.",
         "bot_confused": "क्षमा करें, मैं समझा नहीं. 'जोखिम', 'उत्पादन' या 'लाभ' के बारे में पूछें."
     }
 }
-
 # 🎨 CUSTOM CSS
 st.markdown("""
     <style>
@@ -287,7 +286,7 @@ if menu == t["nav_overview"]:
             
             # Maintenance
             with col_u1:
-                st.markdown("### 🛠 Maintenance")
+                st.markdown("### Maintenance")
                 file_m = st.file_uploader("Upload `test_maintenance.csv`", type=['csv'], key="u1")
                 if file_m:
                     df = pd.read_csv(file_m)
@@ -308,7 +307,7 @@ if menu == t["nav_overview"]:
 
             # Inventory
             with col_u2:
-                st.markdown("### 📦 Inventory")
+                st.markdown("### Inventory")
                 file_i = st.file_uploader("Upload `test_inventory_plan.csv`", type=['csv'], key="u2")
                 if file_i:
                     df = pd.read_csv(file_i)
@@ -325,7 +324,7 @@ if menu == t["nav_overview"]:
 
             # Energy
             with col_u3:
-                st.markdown("### ⚡ Energy")
+                st.markdown("### Energy")
                 file_e = st.file_uploader("Upload `test_energy.csv`", type=['csv'], key="u3")
                 if file_e:
                     df = pd.read_csv(file_e)
@@ -432,32 +431,31 @@ if menu == t["nav_overview"]:
 
         # --- 🤖 AI DECISION CENTER (Replace this specific block only) ---
         st.markdown("---")
-        st.subheader(t["ai_center"]) # <-- Header ગુજરાતીમાં આવશે
+        st.subheader(t["ai_center"]) 
         insight_found = False
         
         # 1. Maintenance Logic (Fixed)
         if st.session_state['maint_data'] is not None:
             insight_found = True
             if risk_count > 0:
-                # English text hatavi ne t["..."] mukyu
                 cost_str = f"₹{risk_count*COST_PER_BREAKDOWN:,}"
                 st.error(t["insight_maint_risk"].format(count=risk_count, cost=cost_str))
             else:
-                st.success(t["insight_maint_ok"]) # <-- AA CHANGE KARYU
+                st.success(t["insight_maint_ok"]) 
 
         # 2. Inventory Logic (Fixed)
         if st.session_state['inv_data'] is not None:
             insight_found = True
-            st.info(t["insight_prod"].format(prod=top_prod_name)) # <-- AA CHANGE KARYU
+            st.info(t["insight_prod"].format(prod=top_prod_name)) 
 
         # 3. Energy Logic (Fixed)
         if st.session_state['energy_data'] is not None:
             insight_found = True
             if energy_waste_count > 0:
                 rev_str = f"₹{carbon_revenue}"
-                st.warning(t["insight_energy_waste"].format(hours=energy_waste_count, rev=rev_str)) # <-- AA CHANGE KARYU
+                st.warning(t["insight_energy_waste"].format(hours=energy_waste_count, rev=rev_str)) 
             else:
-                st.success(t["insight_energy_ok"]) # <-- AA CHANGE KARYU
+                st.success(t["insight_energy_ok"]) 
 
         if not insight_found: 
             st.info(t["insight_wait"])
@@ -535,6 +533,6 @@ elif menu == t["nav_quality"]:
                 st.write("Analyzing...")
                 result = ai_engine.check_product_quality(file)
                 if "Defect" in result:
-                    st.error(f"🚨 {result}")
+                    st.error(f"{result}")
                 else:
-                    st.success(f"✅ {result}")
+                    st.success(f"{result}")
